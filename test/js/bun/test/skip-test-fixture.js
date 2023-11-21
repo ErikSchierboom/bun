@@ -1,4 +1,4 @@
-import { test, describe } from "bun:test";
+import { test, describe, xtest } from "bun:test";
 
 test.skip("test #1", () => {
   console.log("unreachable");
@@ -64,4 +64,8 @@ test.if(true)("test #13", () => {
 
 test.if(1)("test #14", () => {
   console.log("reachable");
+});
+
+xtest("test #15", () => {
+  console.log("unreachable");
 });
