@@ -251,6 +251,13 @@ declare module "bun:test" {
    */
   export const describe: Describe;
   /**
+   * Skips this group of tests.
+   *
+   * @param label the label for the tests
+   * @param fn the function that defines the tests
+   */
+  export function xdescribe(label: string, fn: () => void): void;
+  /**
    * Runs a function, once, before all the tests.
    *
    * This is useful for running set up tasks, like initializing
@@ -503,6 +510,34 @@ declare module "bun:test" {
    */
   export const test: Test;
   export { test as it };
+  /**
+   * Skips this test.
+   *
+   * @param label the label for the test
+   * @param fn the test function
+   * @param options the test timeout or options
+   */
+  export function xit(
+    label: string,
+    fn:
+      | (() => void | Promise<unknown>)
+      | ((done: (err?: unknown) => void) => void),
+    options?: number | TestOptions,
+  ): void;
+  /**
+   * Skips this test.
+   *
+   * @param label the label for the test
+   * @param fn the test function
+   * @param options the test timeout or options
+   */
+  export function xtest(
+    label: string,
+    fn:
+      | (() => void | Promise<unknown>)
+      | ((done: (err?: unknown) => void) => void),
+    options?: number | TestOptions,
+  ): void;
   /**
    * Asserts that a value matches some criteria.
    *
