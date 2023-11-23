@@ -416,6 +416,12 @@ const TestAnalyzer = struct {
                             parser.jest.it = clause.name.ref.?;
                         } else if (bun.strings.eqlComptime(clause.alias, "describe")) {
                             parser.jest.describe = clause.name.ref.?;
+                        } else if (bun.strings.eqlComptime(clause.alias, "xtest")) {
+                            parser.jest.xtest = clause.name.ref.?;
+                        } else if (bun.strings.eqlComptime(clause.alias, "xit")) {
+                            parser.jest.xit = clause.name.ref.?;
+                        } else if (bun.strings.eqlComptime(clause.alias, "xdescribe")) {
+                            parser.jest.xdescribe = clause.name.ref.?;
                         }
                     }
                 }
