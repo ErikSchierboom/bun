@@ -6147,6 +6147,9 @@ fn NewParser_(
                 p.jest.jest = try p.declareCommonJSSymbol(.unbound, "jest");
                 p.jest.it = try p.declareCommonJSSymbol(.unbound, "it");
                 p.jest.expect = try p.declareCommonJSSymbol(.unbound, "expect");
+                p.jest.xtest = try p.declareCommonJSSymbol(.unbound, "xtest");
+                p.jest.xit = try p.declareCommonJSSymbol(.unbound, "xit");
+                p.jest.xdescribe = try p.declareCommonJSSymbol(.unbound, "xdescribe");
                 p.jest.beforeEach = try p.declareCommonJSSymbol(.unbound, "beforeEach");
                 p.jest.afterEach = try p.declareCommonJSSymbol(.unbound, "afterEach");
                 p.jest.beforeAll = try p.declareCommonJSSymbol(.unbound, "beforeAll");
