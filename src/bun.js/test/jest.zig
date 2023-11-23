@@ -324,6 +324,9 @@ pub const Jest = struct {
             "describe",
             "it",
             "test",
+            "xtest",
+            "xit",
+            "xdescribe",
         }) |name| {
             global_hooks_object.put(globalObject, ZigString.static(name), notSupportedHere);
         }
@@ -344,6 +347,7 @@ pub const Jest = struct {
         const module = JSC.JSValue.createEmptyObject(globalObject, 13);
 
         const test_fn = JSC.NewFunction(globalObject, ZigString.static("test"), 2, TestScope.call, false);
+        const skip_fn = JSC.NewFunction(globalObject, ZigString.static("skip"), 2, TestScope.skip, false);
         module.put(
             globalObject,
             ZigString.static("test"),
@@ -354,11 +358,7 @@ pub const Jest = struct {
             ZigString.static("only"),
             JSC.NewFunction(globalObject, ZigString.static("only"), 2, TestScope.only, false),
         );
-        test_fn.put(
-            globalObject,
-            ZigString.static("skip"),
-            JSC.NewFunction(globalObject, ZigString.static("skip"), 2, TestScope.skip, false),
-        );
+        test_fn.put(globalObject, ZigString.static("skip"), skip_fn);
         test_fn.put(
             globalObject,
             ZigString.static("todo"),
@@ -385,7 +385,18 @@ pub const Jest = struct {
             ZigString.static("it"),
             test_fn,
         );
+        module.put(
+            globalObject,
+            ZigString.static("xit"),
+            skip_fn,
+        );
+        module.put(
+            globalObject,
+            ZigString.static("xtest"),
+            skip_fn,
+        );
         const describe = JSC.NewFunction(globalObject, ZigString.static("describe"), 2, DescribeScope.call, false);
+        const describe_skip_fn = JSC.NewFunction(globalObject, ZigString.static("skip"), 2, DescribeScope.skip, false);
         describe.put(
             globalObject,
             ZigString.static("only"),
@@ -394,7 +405,7 @@ pub const Jest = struct {
         describe.put(
             globalObject,
             ZigString.static("skip"),
-            JSC.NewFunction(globalObject, ZigString.static("skip"), 2, DescribeScope.skip, false),
+            describe_skip_fn,
         );
         describe.put(
             globalObject,
@@ -421,6 +432,11 @@ pub const Jest = struct {
             globalObject,
             ZigString.static("describe"),
             describe,
+        );
+        module.put(
+            globalObject,
+            ZigString.static("xdescribe"),
+            describe_skip_fn,
         );
 
         module.put(
